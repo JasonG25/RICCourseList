@@ -32,11 +32,11 @@ func main() {
 	}
 	defer db.Close()
 
-	webservice.PostCourses(router, db)
-	webservice.PostStudents(router, db)
+	webservice.RegisterCourses(router, db)
+	webservice.RegisterStudents(router, db)
 
-	webservice.PostCourseAttendees(router, db)
-	webservice.PostStudentAttendedClasses(router, db)
+	webservice.RegisterCourseAttendees(router, db)
+	webservice.RegisterStudentAttendedClasses(router, db)
 
 	router.Run(":8080")
 }

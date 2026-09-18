@@ -10,7 +10,7 @@ import (
 	"github.com/guozi/RICCourseList/student"
 )
 
-func PostCourses(router *gin.Engine, db *database.DatabaseService) {
+func RegisterCourses(router *gin.Engine, db *database.DatabaseService) {
 	router.GET("/api/courses", func(c *gin.Context) {
 		search := c.Query("search")
 		current := c.Query("current")
@@ -67,17 +67,17 @@ func PostCourses(router *gin.Engine, db *database.DatabaseService) {
 			return
 		}
 
-		courses, err := db.QueryCourses(query)
+		courses, meta, err := db.QueryCourses(query)
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
 
-		c.JSON(http.StatusOK, courses)
+		c.JSON(http.StatusOK, gin.H{"meta": meta, "body": courses})
 	})
 }
 
-func PostStudents(router *gin.Engine, db *database.DatabaseService) {
+func RegisterStudents(router *gin.Engine, db *database.DatabaseService) {
 	router.GET("/api/students", func(c *gin.Context) {
 		name := c.Query("name")
 		current := c.Query("current")
@@ -104,17 +104,17 @@ func PostStudents(router *gin.Engine, db *database.DatabaseService) {
 			return
 		}
 
-		students, err := db.QueryStudents(query)
+		students, meta, err := db.QueryStudents(query)
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
 
-		c.JSON(http.StatusOK, students)
+		c.JSON(http.StatusOK, gin.H{"meta": meta, "body": students})
 	})
 }
 
-func PostCourseAttendees(router *gin.Engine, db *database.DatabaseService) {
+func RegisterCourseAttendees(router *gin.Engine, db *database.DatabaseService) {
 	router.GET("/api/courses/:id/attendees", func(c *gin.Context) {
 		courseID := c.Param("id")
 		current := c.Query("current")
@@ -157,17 +157,17 @@ func PostCourseAttendees(router *gin.Engine, db *database.DatabaseService) {
 			return
 		}
 
-		students, err := db.QueryCourseAttendees(query)
+		students, meta, err := db.QueryCourseAttendees(query)
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
 
-		c.JSON(http.StatusOK, students)
+		c.JSON(http.StatusOK, gin.H{"meta": meta, "body": students})
 	})
 }
 
-func PostStudentAttendedClasses(router *gin.Engine, db *database.DatabaseService) {
+func RegisterStudentAttendedClasses(router *gin.Engine, db *database.DatabaseService) {
 	router.GET("/api/students/:id/attended-classes", func(c *gin.Context) {
 		studentID := c.Param("id")
 		current := c.Query("current")
@@ -210,12 +210,12 @@ func PostStudentAttendedClasses(router *gin.Engine, db *database.DatabaseService
 			return
 		}
 
-		courses, err := db.QueryAttendedClasses(query)
+		courses, meta, err := db.QueryAttendedClasses(query)
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
 
-		c.JSON(http.StatusOK, courses)
+		c.JSON(http.StatusOK, gin.H{"meta": meta, "body": courses})
 	})
 }
