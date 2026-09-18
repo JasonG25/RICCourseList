@@ -1,0 +1,9 @@
+# Backend
+backend/.env
+
+# Go
+backend/vendor/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
