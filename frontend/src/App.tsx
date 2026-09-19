@@ -381,7 +381,7 @@ function App() {
             aria-label={text.openPanel}
             title={text.openPanel}
           >
-            <span>☷</span>
+            <span aria-hidden="true">⚙︎</span>
           </button>
         </div>
       </header>
