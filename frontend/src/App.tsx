@@ -440,6 +440,18 @@ function App() {
                     {selectedStudent === null && <b>✓</b>}
                   </button>
                   <div className="dropdown-divider" />
+                   <div className="sort-block dropdown-sort">
+                     <span className="control-label">{text.sort}</span>
+                     <SortControl
+                       ascending={settings.studentAscending}
+                       onChange={() => {
+                         updateSettings('studentAscending', !settings.studentAscending)
+                         setStudentPage(1)
+                       }}
+                       text={text}
+                     />
+                   </div>
+                   <div className="dropdown-divider" />
                   {studentLoading && <div className="dropdown-message">{text.loading}</div>}
                   {studentError && (
                     <div className="dropdown-message error-message">
@@ -467,18 +479,6 @@ function App() {
                   </div>
                 </div>
               )}
-            </div>
-            <div className="row-divider" />
-            <div className="sort-block">
-              <span className="control-label">{text.sort}</span>
-              <SortControl
-                ascending={settings.studentAscending}
-                onChange={() => {
-                  updateSettings('studentAscending', !settings.studentAscending)
-                  setStudentPage(1)
-                }}
-                text={text}
-              />
             </div>
             <button type="button" className="reset-button" onClick={resetView}>↺ {text.reset}</button>
           </div>
