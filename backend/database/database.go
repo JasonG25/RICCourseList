@@ -7,10 +7,11 @@ import (
 	"github.com/guozi/RICCourseList/course"
 	"github.com/guozi/RICCourseList/student"
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type DatabaseService struct {
-	Conn *pgx.Conn
+	Pool *pgxpool.Pool
 }
 
 type QueryResultMeta struct {
@@ -28,15 +29,16 @@ func createQueryResultMeta(totalCount int, pageSize int) QueryResultMeta {
 }
 
 func ConnectToDatabase() (*DatabaseService, error) {
-	conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
+	pool, err := pgxpool.New(context.Background(), os.Getenv("DATABASE_URL"))
 	if err != nil {
 		return nil, err
 	}
-	return &DatabaseService{Conn: conn}, nil
+
+	return &DatabaseService{Pool: pool}, nil
 }
 
 func (db *DatabaseService) Close() {
-	db.Conn.Close(context.Background())
+	db.Pool.Close()
 }
 
 func (db *DatabaseService) QueryCourses(q course.CourseQuery) ([]course.Course, QueryResultMeta, error) {
@@ -58,7 +60,7 @@ func (db *DatabaseService) QueryCourses(q course.CourseQuery) ([]course.Course, 
 	searchPattern := "%" + q.Search + "%"
 	var totalCount int
 	countQuery := `SELECT COUNT(*) FROM courses c WHERE ` + condition + ` ESCAPE '\'`
-	if err := db.Conn.QueryRow(context.Background(), countQuery, searchPattern).Scan(&totalCount); err != nil {
+	if err := db.Pool.QueryRow(context.Background(), countQuery, searchPattern).Scan(&totalCount); err != nil {
 		return nil, QueryResultMeta{}, err
 	}
 
@@ -97,7 +99,7 @@ func (db *DatabaseService) QueryCourses(q course.CourseQuery) ([]course.Course, 
 func (db *DatabaseService) QueryStudents(q student.StudentQuery) ([]student.Student, QueryResultMeta, error) {
 	searchPattern := "%" + q.Name + "%"
 	var totalCount int
-	if err := db.Conn.QueryRow(
+	if err := db.Pool.QueryRow(
 		context.Background(),
 		`SELECT COUNT(*) FROM students WHERE name ILIKE $1 ESCAPE '\'`,
 		searchPattern,
@@ -143,7 +145,7 @@ func (db *DatabaseService) QueryCourseAttendees(q course.CourseAttendeeQuery) ([
 	}
 
 	var totalCount int
-	if err := db.Conn.QueryRow(
+	if err := db.Pool.QueryRow(
 		context.Background(),
 		`SELECT COUNT(*) FROM student_courses WHERE course_id = $1`,
 		q.CourseID,
@@ -185,7 +187,7 @@ func (db *DatabaseService) QueryAttendedClasses(q student.AttendedClassesQuery) 
 	}
 
 	var totalCount int
-	if err := db.Conn.QueryRow(
+	if err := db.Pool.QueryRow(
 		context.Background(),
 		`SELECT COUNT(*) FROM student_courses WHERE student_id = $1`,
 		q.ID,
@@ -225,5 +227,5 @@ func (db *DatabaseService) QueryAttendedClasses(q student.AttendedClassesQuery) 
 }
 
 func (db *DatabaseService) Query(query string, args ...interface{}) (pgx.Rows, error) {
-	return db.Conn.Query(context.Background(), query, args...)
+	return db.Pool.Query(context.Background(), query, args...)
 }

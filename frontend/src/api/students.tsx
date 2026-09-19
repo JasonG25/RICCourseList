@@ -1,15 +1,4 @@
-export interface Student {
-  id: number
-  name: string
-}
-
-export interface StudentResponse {
-  body: Student[]
-  meta: {
-    total_count: number
-    number_of_pages: number
-  }
-}
+import type { CourseResponse, StudentResponse } from './api'
 
 export async function fetchStudents(
   name: string,
@@ -29,7 +18,7 @@ export async function fetchStudentAttendedCourses(
   current: number,
   pageSize: number,
   ascending: boolean
-): Promise<import('./courses').CourseResponse> {
+): Promise<CourseResponse> {
   const response = await fetch(
     `http://localhost:8080/api/students/${studentID}/attended_classes?current=${current}&page_size=${pageSize}&ascending=${ascending}`
   )

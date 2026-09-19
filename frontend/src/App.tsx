@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react'
 import {
   fetchCourseAttendees,
-  fetchCourses,
-  type Course,
-  type Student,
+  fetchCourses
 } from './api/courses'
 import {
   fetchStudentAttendedCourses,
   fetchStudents,
 } from './api/students'
 import './App.css'
+import type { Course, Student } from './api/api'
 
 type Language = 'en' | 'zh'
 type Theme = 'light' | 'dark'
