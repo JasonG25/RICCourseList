@@ -82,6 +82,7 @@ func RegisterStudents(router *gin.Engine, db *database.DatabaseService) {
 		name := c.Query("name")
 		current := c.Query("current")
 		pageSize := c.Query("page_size")
+		ascending := c.Query("ascending")
 
 		currentInt, err := strconv.Atoi(current)
 		if err != nil {
@@ -94,10 +95,19 @@ func RegisterStudents(router *gin.Engine, db *database.DatabaseService) {
 			return
 		}
 
+		ascendingBool, err := strconv.ParseBool(ascending)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "Invalid ascending",
+			})
+			return
+		}
+
 		query, err := student.CreateStudentQuery(
 			name,
 			currentInt,
 			pageSizeInt,
+			ascendingBool,
 		)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

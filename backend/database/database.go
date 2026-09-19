@@ -105,10 +105,15 @@ func (db *DatabaseService) QueryStudents(q student.StudentQuery) ([]student.Stud
 		return nil, QueryResultMeta{}, err
 	}
 
+	order := "ASC"
+	if !q.Ascending {
+		order = "DESC"
+	}
+
 	rows, err := db.Query(`
         SELECT id, name FROM students
         WHERE name ILIKE $1 ESCAPE '\'
-        ORDER BY name ASC LIMIT $2 OFFSET $3`,
+        ORDER BY name `+order+` LIMIT $2 OFFSET $3`,
 		searchPattern, q.PageSize, (q.Current-1)*q.PageSize,
 	)
 	if err != nil {

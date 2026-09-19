@@ -11,9 +11,10 @@ type Student struct {
 }
 
 type StudentQuery struct {
-	Name     string
-	Current  int
-	PageSize int
+	Name      string
+	Current   int
+	PageSize  int
+	Ascending bool
 }
 
 type AttendedClassesQuery struct {
@@ -23,7 +24,7 @@ type AttendedClassesQuery struct {
 	Ascending bool
 }
 
-func CreateStudentQuery(name string, current int, pageSize int) (StudentQuery, error) {
+func CreateStudentQuery(name string, current int, pageSize int, ascending bool) (StudentQuery, error) {
 	name = strings.TrimSpace(name)
 
 	nameRunes := []rune(name)
@@ -45,9 +46,10 @@ func CreateStudentQuery(name string, current int, pageSize int) (StudentQuery, e
 	name = strings.ReplaceAll(name, `_`, `\_`)
 
 	query := StudentQuery{
-		Name:     name,
-		Current:  current,
-		PageSize: pageSize,
+		Name:      name,
+		Current:   current,
+		PageSize:  pageSize,
+		Ascending: ascending,
 	}
 
 	return query, nil

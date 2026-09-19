@@ -1,0 +1,41 @@
+export interface Course {
+  id: number
+  code: string
+  name: string
+  capacity: number
+  number_of_students: number
+}
+
+export interface CourseResponse {
+  body: Course[]
+  meta: {
+    total_count: number
+    number_of_pages: number
+  }
+}
+
+export async function fetchCourses(
+  search: string,
+  current: number,
+  pageSize: number,
+  caseSensitive: boolean,
+  codeOnly: boolean,
+  ascending: boolean
+): Promise<CourseResponse> {
+  const response = await fetch(
+    `http://localhost:8080/api/courses?search=${search}&current=${current}&page_size=${pageSize}&case_sensitive=${caseSensitive}&code_only=${codeOnly}&ascending=${ascending}`
+  )
+  return response.json()
+}
+
+export async function fetchCourseAttendees(
+  courseID: number,
+  current: number,
+  pageSize: number,
+  ascending: boolean
+): Promise<CourseResponse> {
+  const response = await fetch(
+    `http://localhost:8080/api/courses/${courseID}/attendees?current=${current}&page_size=${pageSize}&ascending=${ascending}`
+  )
+  return response.json()
+}
