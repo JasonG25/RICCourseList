@@ -342,6 +342,7 @@ function App() {
 
   const selectStudent = (student: Student | null) => {
     setSelectedStudent(student)
+    setStudentQuery('')
     setCoursePage(1)
     setCourseQuery('')
     setStudentPanelOpen(false)
@@ -439,18 +440,18 @@ function App() {
                     {selectedStudent === null && <b>✓</b>}
                   </button>
                   <div className="dropdown-divider" />
-                   <div className="sort-block dropdown-sort">
-                     <span className="control-label">{text.sort}</span>
-                     <SortControl
-                       ascending={settings.studentAscending}
-                       onChange={() => {
-                         updateSettings('studentAscending', !settings.studentAscending)
-                         setStudentPage(1)
-                       }}
-                       text={text}
-                     />
-                   </div>
-                   <div className="dropdown-divider" />
+                  <div className="sort-block dropdown-sort">
+                    <span className="control-label">{text.sort}</span>
+                    <SortControl
+                      ascending={settings.studentAscending}
+                      onChange={() => {
+                        updateSettings('studentAscending', !settings.studentAscending)
+                        setStudentPage(1)
+                      }}
+                      text={text}
+                    />
+                  </div>
+                  <div className="dropdown-divider" />
                   {studentLoading && <div className="dropdown-message">{text.loading}</div>}
                   {studentError && (
                     <div className="dropdown-message error-message">
