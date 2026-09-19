@@ -60,6 +60,7 @@ h1, h2, h3, p { margin-top: 0; }
 .control-card { position: relative; z-index: 5; padding: 0 24px; margin-bottom: 34px; background: var(--paper); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); }
 .control-row { display: flex; align-items: end; gap: 18px; min-height: 105px; }
 .student-row { padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.student-row.has-selected-student { padding-bottom: 0; }
 .course-row { align-items: center; min-height: 116px; }
 .field-group { position: relative; flex: 1; min-width: 0; }
 .field-group label, .control-label { display: block; margin-bottom: 10px; color: var(--muted); font: 500 10px 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .11em; }

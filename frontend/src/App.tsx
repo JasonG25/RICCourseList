@@ -400,7 +400,7 @@ function App() {
         </section>
 
         <section className="control-card">
-          <div className="control-row student-row">
+          <div className={`control-row student-row ${selectedStudent ? 'has-selected-student' : ''}`}>
             <div className="field-group student-field">
               <label htmlFor="student-search">{text.studentFilter}</label>
               <div className="input-with-icon">
