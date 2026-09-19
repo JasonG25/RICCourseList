@@ -18,8 +18,9 @@ export async function fetchStudents(
   pageSize: number
 ): Promise<StudentResponse> {
   const response = await fetch(
-    `http://localhost:8080/api/students?name=${name}&current=${current}&page_size=${pageSize}&ascending=${ascending}`
+    `http://localhost:8080/api/students?name=${encodeURIComponent(name)}&current=${current}&page_size=${pageSize}&ascending=${ascending}`
   )
+  if (!response.ok) throw new Error(`Student request failed (${response.status})`)
   return response.json()
 }
 
@@ -28,9 +29,10 @@ export async function fetchStudentAttendedCourses(
   current: number,
   pageSize: number,
   ascending: boolean
-): Promise<StudentResponse> {
+): Promise<import('./courses').CourseResponse> {
   const response = await fetch(
     `http://localhost:8080/api/students/${studentID}/attended_classes?current=${current}&page_size=${pageSize}&ascending=${ascending}`
   )
+  if (!response.ok) throw new Error(`Attended-course request failed (${response.status})`)
   return response.json()
 }
