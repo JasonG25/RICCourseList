@@ -70,6 +70,7 @@ func CreateAttendedClassesQuery(id int, current int, pageSize int, ascending boo
 		ID:       id,
 		Current:  current,
 		PageSize: pageSize,
+		Ascending: ascending,
 	}
 	return query, nil
 }

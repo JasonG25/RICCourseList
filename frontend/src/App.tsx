@@ -409,7 +409,6 @@ function App() {
                   id="student-search"
                   value={studentQuery}
                   onFocus={() => setStudentPanelOpen(true)}
-                  onClick={() => setStudentPanelOpen(true)}
                   onChange={(event) => {
                     setStudentQuery(event.target.value)
                     setStudentPage(1)
