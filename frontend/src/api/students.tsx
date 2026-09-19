@@ -30,7 +30,7 @@ export async function fetchStudentAttendedCourses(
   ascending: boolean
 ): Promise<StudentResponse> {
   const response = await fetch(
-    `http://localhost:8080/api/students/${studentID}/attended-classes?current=${current}&page_size=${pageSize}&ascending=${ascending}`
+    `http://localhost:8080/api/students/${studentID}/attended_classes?current=${current}&page_size=${pageSize}&ascending=${ascending}`
   )
   return response.json()
 }

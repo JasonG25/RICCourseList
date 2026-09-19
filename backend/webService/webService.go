@@ -178,7 +178,7 @@ func RegisterCourseAttendees(router *gin.Engine, db *database.DatabaseService) {
 }
 
 func RegisterStudentAttendedClasses(router *gin.Engine, db *database.DatabaseService) {
-	router.GET("/api/students/:id/attended-classes", func(c *gin.Context) {
+	router.GET("/api/students/:id/attended_classes", func(c *gin.Context) {
 		studentID := c.Param("id")
 		current := c.Query("current")
 		pageSize := c.Query("page_size")
