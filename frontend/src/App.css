@@ -119,6 +119,11 @@ h1, h2, h3, p { margin-top: 0; }
 .course-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; min-height: 250px; }
 .course-card { min-height: 224px; display: flex; flex-direction: column; padding: 21px; border: 1px solid var(--line); border-radius: 14px; color: var(--ink); background: var(--paper); text-align: left; transition: transform .22s, border-color .22s, box-shadow .22s; }
 .course-card:hover { border-color: var(--accent); box-shadow: 0 14px 30px rgba(45, 115, 93, .12); transform: translateY(-4px); }
+.course-card.is-full { border-color: #d99a8d; background: #fff4f1; }
+.course-card.is-full:hover { border-color: #b65c50; box-shadow: 0 14px 30px rgba(182, 92, 80, .16); }
+.course-card.is-full .enrollment-bar span { background: var(--danger); }
+.theme-dark .course-card.is-full { border-color: #8f554d; background: #3a2422; }
+.theme-dark .course-card.is-full:hover { border-color: #d88377; box-shadow: 0 14px 30px rgba(216, 131, 119, .16); }
 .course-card-top, .course-card-bottom, .course-stats { display: flex; align-items: center; justify-content: space-between; }
 .course-index { color: var(--muted); font: 11px 'DM Mono', monospace; }
 .course-code, .modal-code { display: inline-block; padding: 5px 7px; border-radius: 5px; color: var(--accent-dark); background: var(--accent-soft); font: 500 11px 'DM Mono', monospace; }

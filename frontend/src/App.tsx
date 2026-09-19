@@ -555,7 +555,7 @@ function App() {
         ) : (
           <div className="course-grid">
             {courses.map((course, index) => (
-              <button type="button" className="course-card" key={course.id} onClick={() => openCourse(course)}>
+              <button type="button" className={`course-card ${availableSeats(course) === 0 ? 'is-full' : ''}`} key={course.id} onClick={() => openCourse(course)}>
                 <div className="course-card-top">
                   <span className="course-index">{String(index + 1 + (coursePage - 1) * settings.pageSize).padStart(2, '0')}</span>
                   <span className="course-code">{course.code}</span>
